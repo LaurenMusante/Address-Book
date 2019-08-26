@@ -2,13 +2,13 @@ function AddressBook(contact){
   this.currentId=0;
   this.contacts=[];
 }
- function Contacts(first, last, phone){
+ function Contact(first, last, phone){
    this.firstName = first;
    this.lastName = last;
    this.phoneNumber = phone;
  }
 
-Contacts.prototype.fullName = function() {
+Contact.prototype.fullName = function() {
   return this.firstName + " " + this.lastName;
 }
 
@@ -21,3 +21,8 @@ AddressBook.prototype.assignId = function(){
   this.currentId += 1;
   return this.currentId;
 }
+
+var nina = new Contact ("Nina", "Murphy", "8318880000");
+var rj = new Contact ("RJ", "Leimpeter", "5109873019");
+var someChick = new Contact ("Vanessa", "Shoemaker", "5038675309");
+var someDude = new Contact ("Chad", "Michaels", "5082037045");
