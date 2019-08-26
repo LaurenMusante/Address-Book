@@ -2,12 +2,11 @@ function AddressBook(contact){
   this.currentId=0;
   this.contacts=[];
 }
- function Contact(first, last, phone, email, home) {
+ function Contact(first, last, phone) {
    this.firstName = first;
    this.lastName = last;
    this.phoneNumber = phone;
-   this.emailAddress = email;
-   this.homeAddress = home;
+   this.address = {};
  }
 
 Contact.prototype.fullName = function() {
@@ -18,6 +17,11 @@ AddressBook.prototype.addContact = function(contact) {
   contact.id = this.assignId();
   this.contacts.push(contact);
   return contact;
+}
+
+Contact.prototype.addAddress = function(type, address){
+  this.address[type] = address;
+  return this.address;
 }
 
 AddressBook.prototype.findContact = function(id) {
@@ -72,9 +76,10 @@ $(document).ready(function() {
     var inputtedFirstName = $("input#new-first-name").val();
     var inputtedLastName = $("input#new-last-name").val();
     var inputtedPhoneNumber = $("input#new-phone-number").val();
-    var inputtedEmailAddress = $("input#new-email-address").val();
-    var inputtedHomeAddress = $("input#new-home-address").val();
-    var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmailAddress, inputtedHomeAddress);
+    var inputtedAddress = $("input#new-address").val();
+    var inputtedAddressType = $("select[name=addressType] option:selected").val();
+    var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber);
+    newContact.addAddress(inputtedAddressType, inputtedAddress);
     addressBook.addContact(newContact);
     console.log(addressBook.contacts);
 
@@ -82,8 +87,7 @@ $(document).ready(function() {
     $("span.first-name").text(inputtedFirstName);
     $("span.last-name").text(inputtedLastName);
     $("span.phone-number").text(inputtedPhoneNumber);
-    $("span.email-address").text(inputtedEmailAddress);
-    $("span.home-address").text(inputtedHomeAddress);
+    $("span.address").text(inputtedAddressType + ": " + inputtedAddress);
     $("#show-contact").show();
     displayContactDetails(addressBook);
     $("ul").show();
