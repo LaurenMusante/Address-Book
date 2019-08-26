@@ -2,10 +2,12 @@ function AddressBook(contact){
   this.currentId=0;
   this.contacts=[];
 }
- function Contact(first, last, phone){
+ function Contact(first, last, phone, email, home) {
    this.firstName = first;
    this.lastName = last;
    this.phoneNumber = phone;
+   this.emailAddress = email;
+   this.homeAddress = home;
  }
 
 Contact.prototype.fullName = function() {
@@ -29,6 +31,14 @@ AddressBook.prototype.findContact = function(id) {
   return false;
 }
 
+function displayContactDetails(addressBookToDisplay) {
+  var contactsList = $("ul#contacts");
+  var htmlForContactInfo = "";
+  addressBookToDisplay.contacts.forEach(function(contact){
+    htmlForContactInfo += "<li id=" + contact.id + ">" + contact.firstName + " " + contact.lastName + "</li>";
+  });
+  contactsList.html(htmlForContactInfo);
+}
 AddressBook.prototype.deleteContact = function(id) {
   for (var i=0; i<this.contacts.length; i++) {
     if (this.contacts[i]){
@@ -62,7 +72,9 @@ $(document).ready(function() {
     var inputtedFirstName = $("input#new-first-name").val();
     var inputtedLastName = $("input#new-last-name").val();
     var inputtedPhoneNumber = $("input#new-phone-number").val();
-    var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber);
+    var inputtedEmailAddress = $("input#new-email-address").val();
+    var inputtedHomeAddress = $("input#new-home-address").val();
+    var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmailAddress, inputtedHomeAddress);
     addressBook.addContact(newContact);
     console.log(addressBook.contacts);
 
@@ -70,6 +82,10 @@ $(document).ready(function() {
     $("span.first-name").text(inputtedFirstName);
     $("span.last-name").text(inputtedLastName);
     $("span.phone-number").text(inputtedPhoneNumber);
+    $("span.email-address").text(inputtedEmailAddress);
+    $("span.home-address").text(inputtedHomeAddress);
     $("#show-contact").show();
+    displayContactDetails(addressBook);
+    $("ul").show();
   });
 });
