@@ -13,6 +13,7 @@ Contact.prototype.fullName = function() {
 }
 
 AddressBook.prototype.addContact = function(contact) {
+  contact.id = this.assignId();
   this.contacts.push(contact);
   return contact;
 }
